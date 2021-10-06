@@ -1,16 +1,31 @@
 package com.example.android.manifestproject.signinscreen
 
+import android.app.Application
+import android.provider.SyncStateContract.Helpers.insert
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import com.example.android.manifestproject.data.ManifestoDBRepo
-import com.example.android.manifestproject.data.ManifestoDBRepoImp
+import androidx.lifecycle.*
+import androidx.room.Room
+import com.example.android.manifestproject.data.GuestEntity
+import com.example.android.manifestproject.data.ManifestoDatabaseDao
+import com.example.android.manifestproject.data.ManifestoDatabase
+import kotlinx.coroutines.*
 
-class SignInViewModel(): ViewModel() {
+class SignInViewModel(val database: ManifestoDatabaseDao,
+    application: Application)
+    : AndroidViewModel(application) {
 
-    private val manifestoDBRepo: ManifestoDBRepo = ManifestoDBRepoImp()
+    private var viewModelJob = Job()
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    private var guest = MutableLiveData<GuestEntity?>()
+
+    private val guests = database.getAllGuests()
 
     val regexPhone = Regex("[0-9]+")
     val regexName = Regex("[A-Za-z0-9 ]{2,12}")
@@ -51,9 +66,55 @@ class SignInViewModel(): ViewModel() {
 
     private val _emergency_name_check: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 
-    val buttonVisible = Transformations.map(_name_check)
-    {
-        it
+    private val _navigateToMainScreen = MutableLiveData<Boolean>()
+    val navigateToMainScreen: LiveData<Boolean>
+        get() = _navigateToMainScreen
+
+    fun doneNavigating() {
+        _navigateToMainScreen.value = null
+    }
+
+    init {
+        initializeGuest()
+    }
+
+    private fun initializeGuest() {
+        uiScope.launch {
+            guest.value = null
+        }
+    }
+
+    private suspend fun getGuestFromDatabase(): GuestEntity? {
+        return withContext(Dispatchers.IO) {
+            var guest = database.getGuest()
+            guest
+        }
+    }
+
+    fun newGuest() {
+        uiScope.launch {
+            val newGuest = GuestEntity()
+
+            newGuest.fullName = _name.value.toString()
+            newGuest.phoneNumber = _phone_number.value?.filter { !it.isWhitespace()}.toString()
+            newGuest.email = _email.value.toString()
+            newGuest.emergencyName = _emergency_name.value.toString()
+            newGuest.emergencyPhoneNumber = _emergency_number.value?.filter { !it.isWhitespace()}.toString()
+
+            insert(newGuest)
+
+            guest.value = getGuestFromDatabase()
+
+            Log.d("Zelda", "Guest ${guest.value?.fullName} has been created.")
+
+            _navigateToMainScreen.value = true
+        }
+    }
+
+    private suspend fun insert(guest: GuestEntity) {
+        withContext(Dispatchers.IO) {
+            database.insert(guest)
+        }
     }
 
     fun checkValidity()
@@ -136,6 +197,4 @@ class SignInViewModel(): ViewModel() {
         //Log.d("Zelda", "Emergency contact namer: ${_emergency_name.value}")
         checkEmergencyName()
     }
-
-
 }

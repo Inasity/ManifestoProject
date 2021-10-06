@@ -2,4 +2,12 @@
     <string name="app_name">ManifestProject</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">No one has currently signed in. \n Be the first to sign.</string>
+
+    <string name="title"><![CDATA[<h3>HERE IS YOUR GUEST DATA</h3>]]></string>
+    <string name="guest_name"><![CDATA[<b>Full name:</b>]]></string>
+    <string name="guest_phone"><![CDATA[<b>Phone number:</b>]]></string>
+    <string name="guest_email"><![CDATA[<b>Email address:</b>]]></string>
+    <string name="guest_emergency_name"><![CDATA[<b>Emergency contact name:</b>]]></string>
+    <string name="guest_emergency_phone"><![CDATA[<b>Emergency contact phone number:</b>]]></string>
+
 </resources>

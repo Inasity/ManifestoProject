@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     android:label="main_nav"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/mainScreenFragment">
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.android.manifestproject.signinscreen.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
