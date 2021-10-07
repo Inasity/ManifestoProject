@@ -6,6 +6,9 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import androidx.core.text.HtmlCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.manifestproject.data.GuestEntity
 import java.lang.StringBuilder
 
@@ -32,4 +35,14 @@ fun formatGuests(guests: List<GuestEntity>, resources: Resources): Spanned {
     } else {
         return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified V : ViewModel> Fragment.createViewModel(crossinline instance: () -> V): V {
+    val factory = object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return instance() as T
+        }
+    }
+    return ViewModelProvider(this, factory).get(V::class.java)
 }

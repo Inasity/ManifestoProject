@@ -10,8 +10,9 @@ import com.example.android.manifestproject.data.ManifestoDatabaseDao
 import com.example.android.manifestproject.data.ManifestoDatabase
 import kotlinx.coroutines.*
 
-class SignInViewModel(val database: ManifestoDatabaseDao,
-    application: Application)
+class SignInViewModel(private val database: ManifestoDatabaseDao,
+    application: Application,
+    private val guestId: Long)
     : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
@@ -79,8 +80,31 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
     }
 
     private fun initializeGuest() {
-        uiScope.launch {
-            guest.value = null
+        viewModelScope.launch {
+            if (guestId != -1L)
+            {
+                Log.d("Zelda", "Guest ID: $guestId")
+                val returningGuest = database.get(guestId)
+                guest.value = returningGuest
+                Log.d("Zelda", "Guest ${guest.value?.fullName} has arrived.")
+                _name.value = guest.value?.fullName
+                Log.d("Zelda", "Name: ${_name.value}")
+                _phone_number.value = guest.value?.phoneNumber
+                Log.d("Zelda", "Phone: ${_phone_number.value}")
+                _email.value = guest.value?.email
+                Log.d("Zelda", "Email: ${_email.value}")
+                _emergency_name.value = guest.value?.emergencyName
+                Log.d("Zelda", "Emergency contact: ${_emergency_name.value}")
+                _emergency_number.value = guest.value?.emergencyPhoneNumber
+                Log.d("Zelda", "Emergency phone: ${_emergency_number.value}")
+                checkAll()
+
+            }
+            else
+            {
+                guest.postValue(null)
+                Log.d("Zelda", "New guest has arrived.")
+            }
         }
     }
 
@@ -91,21 +115,44 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
         }
     }
 
+    private suspend fun getGuestWithID(Id: Long): GuestEntity? {
+        return withContext(Dispatchers.IO) {
+            var guest = database.getGuestWithId(Id)
+            guest.value
+        }
+    }
+
     fun newGuest() {
         uiScope.launch {
-            val newGuest = GuestEntity()
+            if(guestId != -1L)
+            {
+                guest.value?.fullName = _name.value.toString()
+                guest.value?.phoneNumber = _phone_number.value?.filter { !it.isWhitespace()}.toString()
+                guest.value?.email = _email.value.toString()
+                guest.value?.emergencyName = _emergency_name.value.toString()
+                guest.value?.emergencyPhoneNumber = _emergency_number.value?.filter { !it.isWhitespace()}.toString()
 
-            newGuest.fullName = _name.value.toString()
-            newGuest.phoneNumber = _phone_number.value?.filter { !it.isWhitespace()}.toString()
-            newGuest.email = _email.value.toString()
-            newGuest.emergencyName = _emergency_name.value.toString()
-            newGuest.emergencyPhoneNumber = _emergency_number.value?.filter { !it.isWhitespace()}.toString()
+                guest.value?.let { update(it) }
 
-            insert(newGuest)
+                Log.d("Zelda", "Guest ${guest.value?.fullName} has been updated.")
+            }
+            else
+            {
+                val newGuest = GuestEntity()
 
-            guest.value = getGuestFromDatabase()
+                newGuest.fullName = _name.value.toString()
+                newGuest.phoneNumber = _phone_number.value?.filter { !it.isWhitespace()}.toString()
+                newGuest.email = _email.value.toString()
+                newGuest.emergencyName = _emergency_name.value.toString()
+                newGuest.emergencyPhoneNumber = _emergency_number.value?.filter { !it.isWhitespace()}.toString()
 
-            Log.d("Zelda", "Guest ${guest.value?.fullName} has been created.")
+                insert(newGuest)
+
+                guest.value = getGuestFromDatabase()
+
+                Log.d("Zelda", "Guest ${guest.value?.fullName} has been created.")
+            }
+
 
             _navigateToMainScreen.value = true
         }
@@ -114,6 +161,12 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
     private suspend fun insert(guest: GuestEntity) {
         withContext(Dispatchers.IO) {
             database.insert(guest)
+        }
+    }
+
+    private suspend fun update(guest: GuestEntity) {
+        withContext(Dispatchers.IO) {
+            database.update((guest))
         }
     }
 
@@ -155,8 +208,8 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
         checkPhoneNumber()
     }
 
-    fun checkEmail(email: CharSequence){
-        _email_check.value = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    fun checkEmail(){
+        _email_check.value = android.util.Patterns.EMAIL_ADDRESS.matcher(_email.value).matches()
         Log.d("Zelda", "Email boolean: ${_email_check.value}")
         checkValidity()
     }
@@ -165,7 +218,7 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
     {
         _email.value = text.toString()
         //Log.d("Zelda", "Email: ${_email.value}")
-        checkEmail(text.toString())
+        checkEmail()
     }
 
     fun checkEmergencyNumber()
@@ -196,5 +249,14 @@ class SignInViewModel(val database: ManifestoDatabaseDao,
         _emergency_name.value = text.toString()
         //Log.d("Zelda", "Emergency contact namer: ${_emergency_name.value}")
         checkEmergencyName()
+    }
+
+    fun checkAll()
+    {
+        checkName()
+        checkPhoneNumber()
+        checkEmail()
+        checkEmergencyName()
+        checkEmergencyNumber()
     }
 }

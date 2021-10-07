@@ -20,6 +20,9 @@ interface ManifestoDatabaseDao {
     @Delete
     fun delete(guest: GuestEntity)
 
+    @Query("SELECT * from guest_list WHERE guestID = :key")
+    suspend fun get(key: Long): GuestEntity?
+
     //Gets all guests by order of ID
     @Query("SELECT * FROM guest_list ORDER BY guestID DESC")
     fun getAllGuests(): LiveData<List<GuestEntity>>

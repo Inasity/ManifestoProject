@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 class MainScreenViewModel(
-    val database: ManifestoDatabaseDao,
+    private val database: ManifestoDatabaseDao,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -22,7 +22,7 @@ class MainScreenViewModel(
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var guests = database.getAllGuests()
+    var guests = database.getAllGuests()
 
     val guestString = Transformations.map(guests) {guests ->
         formatGuests(guests, application.resources)

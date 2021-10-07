@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.manifestproject.R
@@ -40,7 +41,18 @@ class MainScreenFragment : Fragment() {
 
         binding.signInButton.setOnClickListener{ v: View ->
             v.findNavController().navigate(MainScreenFragmentDirections.actionMainScreenFragmentToSignInFragment())
+            viewModel.doneNavigating()
         }
+
+
+        val adapter = GuestEntityAdapter()
+        binding.guestList.adapter = adapter
+
+        viewModel.guests.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
 
         return binding.root
     }
