@@ -1,6 +1,8 @@
 package com.example.android.manifestproject.data
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 
@@ -33,4 +35,7 @@ interface ManifestoDatabaseDao {
 
     @Query("SELECT * FROM guest_list ORDER BY guestID DESC LIMIT 1")
     fun getGuest(): GuestEntity?
+
+    @Query("SELECT * FROM guest_list")
+    fun getAll(): List<GuestEntity>
 }

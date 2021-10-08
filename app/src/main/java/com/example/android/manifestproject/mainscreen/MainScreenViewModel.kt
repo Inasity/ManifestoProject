@@ -1,12 +1,14 @@
 package com.example.android.manifestproject.mainscreen
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.android.manifestproject.data.GuestEntity
 import com.example.android.manifestproject.data.ManifestoDatabaseDao
-import com.example.android.manifestproject.formatGuests
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 
 class MainScreenViewModel(
     private val database: ManifestoDatabaseDao,
@@ -20,23 +22,19 @@ class MainScreenViewModel(
         viewModelJob.cancel()
     }
 
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    var guests: LiveData<List<GuestEntity>> = database.getAllGuests()
 
-    var guests = database.getAllGuests()
-
-    val guestString = Transformations.map(guests) {guests ->
-        formatGuests(guests, application.resources)
-    }
 
     private val _navigateToLogInScreen = MutableLiveData<Boolean?>()
-
-    val navigateToLogInScreen: LiveData<Boolean?>
-        get() = _navigateToLogInScreen
 
     fun doneNavigating() {
         _navigateToLogInScreen.value = false
     }
 
-
+    suspend fun delete(guest: GuestEntity) {
+        withContext(Dispatchers.IO) {
+            database.delete(guest)
+        }
+    }
 
 }

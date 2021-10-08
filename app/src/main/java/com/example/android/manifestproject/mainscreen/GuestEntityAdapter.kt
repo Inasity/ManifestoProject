@@ -1,61 +1,75 @@
 package com.example.android.manifestproject.mainscreen
 
 import android.app.AlertDialog
-import android.nfc.Tag
-import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.manifestproject.R
 import com.example.android.manifestproject.data.GuestEntity
 import com.example.android.manifestproject.databinding.ListItemGuestEntityBinding
-import com.example.android.manifestproject.dialog.GuestDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction1
 
-class GuestEntityAdapter() : ListAdapter<GuestEntity,
-        GuestEntityAdapter.ViewHolder>(GuestEntityDiffCallback())
-{
+class GuestEntityAdapter(private val negDialogAction: KSuspendFunction1<GuestEntity, Unit>) : ListAdapter<GuestEntity,
+        GuestEntityAdapter.ViewHolder>(GuestEntityDiffCallback()) {
 
-    class ViewHolder private constructor(val binding: ListItemGuestEntityBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(
+        private val binding: ListItemGuestEntityBinding,
+        private val negDialogAction: KSuspendFunction1<GuestEntity, Unit>,
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(item: GuestEntity){
 
-                val res = itemView.context.resources
+        fun bind(item: GuestEntity) {
 
-                binding.guestName.text = item.fullName
+            binding.guestName.text = item.fullName
 
-                binding.editButton.setOnClickListener{v: View ->
-                    v.findNavController().navigate(
-                        MainScreenFragmentDirections.
-                        actionMainScreenFragmentToSignInFragment(item.guestID))
-                }
-
-                binding.cancelButton.setOnClickListener{v: View ->
-                    var dialogBuilder = AlertDialog.Builder(v.rootView.context)
-                    val dialogView = LayoutInflater.from(v.rootView.context).inflate(
-                        R.layout.fragment_guest_delete_dialog, null)
-
-                    dialogBuilder.setView(dialogView)
-                    dialogBuilder.setCancelable(true)
-
-                    dialogBuilder.show()
-
-                }
+            binding.editButton.setOnClickListener { v: View ->
+                v.findNavController().navigate(
+                    MainScreenFragmentDirections.actionMainScreenFragmentToSignInFragment(item.guestID)
+                )
             }
+
+            binding.cancelButton.setOnClickListener { v: View ->
+
+
+
+                val dialogBuilderDelete = AlertDialog.Builder(v.rootView.context)
+                dialogBuilderDelete.setCancelable(false)
+                dialogBuilderDelete.setMessage("Continue to delete ${binding.guestName.text}?")
+                dialogBuilderDelete.apply {
+                    setPositiveButton("ALLOW"
+                    ) { dialog, _ ->
+                        CoroutineScope(Dispatchers.IO).launch {
+                            negDialogAction.invoke(item)
+                        }
+                        Log.d("Zelda", "Deleted ${binding.guestName.text}.")
+                        dialog.dismiss()
+                    }
+                    setNegativeButton("DENY"
+                    ) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }
+                dialogBuilderDelete.show()
+            }
+        }
+
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup, negDialogAction: KSuspendFunction1<GuestEntity, Unit>): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemGuestEntityBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
+                return ViewHolder(binding, negDialogAction)
             }
         }
-        }
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -64,7 +78,7 @@ class GuestEntityAdapter() : ListAdapter<GuestEntity,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, negDialogAction)
     }
 }
 
@@ -78,3 +92,4 @@ class GuestEntityDiffCallback : DiffUtil.ItemCallback<GuestEntity>() {
     }
 
 }
+

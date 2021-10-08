@@ -26,17 +26,5 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_mainScreenFragment_to_guestDialogFragment2"
-            app:destination="@id/guestDialogFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/guestDialogFragment2"
-        android:name="com.example.android.manifestproject.dialog.GuestDialogFragment"
-        android:label="GuestDialogFragment" >
-        <argument
-            android:name="guestID"
-            app:argType="long"
-            android:defaultValue="-1L" />
     </fragment>
 </navigation>

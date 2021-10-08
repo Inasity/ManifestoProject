@@ -2,6 +2,7 @@ package com.example.android.manifestproject.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +14,21 @@ import com.example.android.manifestproject.databinding.FragmentGuestDeleteDialog
 
 class GuestDialogFragment(): DialogFragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding: FragmentGuestDeleteDialogBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_guest_delete_dialog, container, false
-        )
-
-        binding.denyButton.setOnClickListener{
-            dismiss()
-        }
-
-        return binding.root
-
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return activity?.let {
+            // Use the Builder class for convenient dialog construction
+            val builder = AlertDialog.Builder(it)
+            builder.setMessage("Do you wish to delete user?")
+                .setPositiveButton("ALLOW",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // FIRE ZE MISSILES!
+                    })
+                .setNegativeButton("DENY",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User cancelled the dialog
+                    })
+            // Create the AlertDialog object and return it
+            builder.create()
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

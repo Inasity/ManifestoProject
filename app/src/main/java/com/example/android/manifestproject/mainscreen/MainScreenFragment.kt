@@ -1,13 +1,12 @@
 package com.example.android.manifestproject.mainscreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.manifestproject.R
@@ -20,7 +19,7 @@ class MainScreenFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentMainScreenBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_main_screen, container, false)
@@ -37,7 +36,7 @@ class MainScreenFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         binding.signInButton.setOnClickListener{ v: View ->
             v.findNavController().navigate(MainScreenFragmentDirections.actionMainScreenFragmentToSignInFragment())
@@ -45,14 +44,24 @@ class MainScreenFragment : Fragment() {
         }
 
 
-        val adapter = GuestEntityAdapter()
+        val adapter = GuestEntityAdapter(viewModel::delete)
         binding.guestList.adapter = adapter
 
-        viewModel.guests.observe(viewLifecycleOwner, Observer {
+        viewModel.guests.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
             }
+            if(adapter.itemCount <= 0)
+            {
+                binding.noOneSignedInTextView.visibility = View.VISIBLE
+            }
+            else
+            {
+                binding.noOneSignedInTextView.visibility = View.INVISIBLE
+            }
         })
+
+
 
         return binding.root
     }

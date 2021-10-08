@@ -9,5 +9,6 @@
     <string name="guest_email"><![CDATA[<b>Email address:</b>]]></string>
     <string name="guest_emergency_name"><![CDATA[<b>Emergency contact name:</b>]]></string>
     <string name="guest_emergency_phone"><![CDATA[<b>Emergency contact phone number:</b>]]></string>
+    <string name="sign_in">Sign In</string>
 
 </resources>
