@@ -54,6 +54,57 @@ class SignInFragment : Fragment() {
 
         binding.setLifecycleOwner(this)
 
+        viewModel.name_check.observe(viewLifecycleOwner, Observer { goodName ->
+            if(viewModel.showNameError())
+            {
+                binding.textFieldTIET.setError(
+                    "Must be 2-12 character's long and have no special characters.", null)
+            }
+            else{
+                binding.textFieldTIL.error = null
+            }
+        })
+
+        viewModel.phone_number_check.observe(viewLifecycleOwner, Observer { goodPhone ->
+            if(viewModel.showPhoneError()){
+                binding.textFieldPhoneInput.setError(
+                    "Must enter 10 digit number.", null)
+            }
+            else{
+                binding.textFieldPhone.error = null
+            }
+        })
+
+        viewModel.email_check.observe(viewLifecycleOwner, Observer { goodEmail ->
+            if(viewModel.showEmailError()){
+                binding.textFieldEmailInput.setError(
+                    "We do not recognize that as an email. Try again.",
+                    null)
+            }
+            else{
+                binding.textFieldEmail.error = null
+            }
+        })
+
+        viewModel.emergency_number_check.observe(viewLifecycleOwner, Observer { goodEmergencyNum ->
+            if(viewModel.showEmergencyPhoneError()){
+                binding.textFieldEmergencyNumberInput.setError("Must enter 10 digit number.", null)
+            }
+            else{
+                binding.textFieldEmergencyNumber.error = null
+            }
+        })
+
+        viewModel.emergency_name_check.observe(viewLifecycleOwner, Observer { goodEmergencyName ->
+            if(viewModel.showEmergencyNameError()){
+                binding.textFieldEmergencyNameInput.setError("Must be 2-12 character's long and have no special characters.",
+                null)
+            }
+            else{
+                binding.textFieldEmergencyName.error = null
+            }
+        })
+
         viewModel.navigateToMainScreen.observe(viewLifecycleOwner, Observer { canWeNavigate ->
             if (canWeNavigate == true)
             {
@@ -67,6 +118,13 @@ class SignInFragment : Fragment() {
 
         viewModel.login_mediator.observe(viewLifecycleOwner, Observer { isGood ->
             binding.saveAndSignButton.isEnabled = isGood
+            if (isGood == true)
+            {
+                binding.saveAndSignButton.alpha= 1.0F
+            }
+            else{
+                binding.saveAndSignButton.alpha= 0.3F
+            }
         })
 
         return binding.root

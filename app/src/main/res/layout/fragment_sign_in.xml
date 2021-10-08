@@ -13,146 +13,246 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="369dp"
-            android:layout_height="675dp"
+            android:id="@+id/ManifestoBottomCity"
+            android:layout_width="550dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.17"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signInScrollView"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/picture" />
+
+        <TextView
+            android:id="@+id/M"
+            android:layout_width="38dp"
+            android:layout_height="50dp"
+            android:fontFamily="@font/modernregular"
+            android:text="M"
+            android:textColor="#eea86c"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/ManifestoText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ManifestoText"
+            android:layout_width="62dp"
+            android:layout_height="20dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Manifesto"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/rectangle_51" />
+            app:layout_constraintVertical_bias="0.102" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldTIL"
-            android:layout_width="351dp"
-            android:layout_height="wrap_content"
-
-            android:hint="Enter your name here"
-            app:boxStrokeColor="#000000"
-            app:errorEnabled="true"
-            app:hintTextColor="#1f1f39"
-            app:layout_constraintBottom_toTopOf="@+id/textFieldPhone"
-            app:layout_constraintEnd_toEndOf="parent"
+        <ImageButton
+            android:id="@+id/signInBackButton"
+            android:layout_width="48dp"
+            android:layout_height="43dp"
+            android:backgroundTint="#00FFFFFF"
+            android:onClick="@{() -> viewModel.navigateBack()}"
+            app:layout_constraintBottom_toBottomOf="@+id/ManifestoText"
+            app:layout_constraintEnd_toStartOf="@+id/M"
+            app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textFieldTIET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00FFFFFF"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.updateName(text)}"
-                android:text="@{viewModel.name}"
-                android:textColorHint="#1f1f39" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldPhone"
-            android:layout_width="351dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter your phone number here"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/textFieldEmail"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldTIL"
-            tools:layout_editor_absoluteX="30dp">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textFieldPhoneInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00FFFFFF"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.updatePhoneNumber(text)}"
-                android:text="@{viewModel.phone_number}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldEmail"
-            android:layout_width="351dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter your email address here"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/textFieldEmergencyNumber"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldPhone"
-            tools:layout_editor_absoluteX="30dp">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textFieldEmailInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00FFFFFF"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmail(text)}"
-                android:text="@{viewModel.email}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldEmergencyNumber"
-            android:layout_width="351dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter your emergency contact number here"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/textFieldEmergencyName"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
-            tools:layout_editor_absoluteX="30dp">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textFieldEmergencyNumberInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00FFFFFF"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyNumber(text)}"
-                android:text="@{viewModel.emergency_number}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldEmergencyName"
-            android:layout_width="351dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter your emergency contact name here"
-            app:errorEnabled="true"
-            app:layout_constraintBottom_toTopOf="@+id/saveAndSignButton"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldEmergencyNumber"
-            tools:layout_editor_absoluteX="30dp">
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textFieldEmergencyNameInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00FFFFFF"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyName(text)}"
-                android:text="@{viewModel.emergency_name}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/saveAndSignButton"
-            android:layout_width="261dp"
-            android:layout_height="85dp"
-            android:layout_marginStart="75dp"
-            android:layout_marginEnd="75dp"
-            android:backgroundTint="#3845ab"
-            android:onClick="@{() -> viewModel.newGuest()}"
-            android:text="Save and Sign"
-            android:textColor="#ffffff"
-            android:textSize="16sp"
+        <ScrollView
+            android:id="@+id/signInScrollView"
+            android:layout_width="260dp"
+            android:layout_height="400dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldEmergencyName" />
+            app:layout_constraintTop_toBottomOf="@+id/ManifestoText"
+            app:layout_constraintVertical_bias="0.167">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldTIL"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Full Name"
+                    app:boxBackgroundColor="#1f1f39"
+                    app:boxBackgroundMode="outline"
+                    app:boxCollapsedPaddingTop="0dp"
+                    app:boxStrokeColor="#eea86c"
+                    app:boxStrokeErrorColor="#c01313"
+                    app:boxStrokeWidth="2dp"
+                    app:counterMaxLength="12"
+                    app:counterOverflowTextColor="@color/design_default_color_error"
+                    app:errorEnabled="true"
+                    app:errorTextAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:errorTextColor="#c01313"
+                    app:helperTextTextColor="#1f1f39"
+                    app:hintTextColor="#1f1f39"
+
+                    app:placeholderTextColor="#1f1f39">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldTIET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00FFFFFF"
+                        android:fontFamily="@font/montserrat"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.updateName(text)}"
+                        android:text="@{viewModel.name}"
+                        android:textColorHint="#1f1f39"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldPhone"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Phone Number"
+                    app:boxBackgroundMode="outline"
+                    app:boxCollapsedPaddingTop="0dp"
+                    app:boxStrokeColor="#eea86c"
+                    app:boxStrokeWidth="2dp"
+                    app:errorEnabled="true">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldPhoneInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#00FFFFFF"
+                        android:fontFamily="@font/montserrat"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.updatePhoneNumber(text)}"
+                        android:text="@{viewModel.phone_number}"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldEmail"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Email"
+                    app:boxBackgroundMode="outline"
+                    app:boxCollapsedPaddingTop="0dp"
+                    app:boxStrokeColor="#eea86c"
+                    app:boxStrokeWidth="2dp"
+                    app:errorEnabled="true"
+                    tools:layout_editor_absoluteX="-113dp"
+                    tools:layout_editor_absoluteY="588dp">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldEmailInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#00FFFFFF"
+                        android:fontFamily="@font/montserrat"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmail(text)}"
+                        android:text="@{viewModel.email}"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldEmergencyNumber"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Emergency Contact Number"
+                    app:boxBackgroundMode="outline"
+                    app:boxCollapsedPaddingTop="0dp"
+                    app:boxStrokeColor="#eea86c"
+                    app:boxStrokeWidth="2dp"
+                    app:errorEnabled="true">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldEmergencyNumberInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#00FFFFFF"
+                        android:fontFamily="@font/montserrat"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyNumber(text)}"
+                        android:text="@{viewModel.emergency_number}"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldEmergencyName"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Emergency Contact Name"
+                    app:boxBackgroundMode="outline"
+                    app:boxCollapsedPaddingTop="0dp"
+                    app:boxStrokeColor="#eea86c"
+                    app:boxStrokeWidth="2dp"
+                    app:errorEnabled="true">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textFieldEmergencyNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#00FFFFFF"
+                        android:fontFamily="@font/montserrat"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyName(text)}"
+                        android:text="@{viewModel.emergency_name}"
+                        android:textSize="11sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/saveAndSignButton"
+                    android:layout_width="150dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="#3845AB"
+                    android:enabled="false"
+                    android:onClick="@{() -> viewModel.newGuest()}"
+                    android:text="Save and Sign"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

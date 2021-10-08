@@ -48,24 +48,32 @@ class SignInViewModel(private val database: ManifestoDatabaseDao,
     get() = _phone_number
 
     private val _phone_number_check: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val phone_number_check: LiveData<Boolean>
+        get() = _phone_number_check
 
     private val _email: MutableLiveData<String> = MutableLiveData("")
     val email: LiveData<String>
     get() = _email
 
     private val _email_check: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val email_check: LiveData<Boolean>
+        get() = _email_check
 
     private val _emergency_number: MutableLiveData<String> = MutableLiveData("")
     val emergency_number: LiveData<String>
     get() = _emergency_number
 
     private val _emergency_number_check: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val emergency_number_check: LiveData<Boolean>
+        get() = _emergency_number_check
 
     private val _emergency_name: MutableLiveData<String> = MutableLiveData("")
     val emergency_name: LiveData<String>
     get() = _emergency_name
 
     private val _emergency_name_check: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val emergency_name_check:LiveData<Boolean>
+        get() = _emergency_name_check
 
     private val _navigateToMainScreen = MutableLiveData<Boolean>()
     val navigateToMainScreen: LiveData<Boolean>
@@ -156,6 +164,11 @@ class SignInViewModel(private val database: ManifestoDatabaseDao,
 
             _navigateToMainScreen.value = true
         }
+    }
+
+    fun navigateBack()
+    {
+        _navigateToMainScreen.value = true
     }
 
     private suspend fun insert(guest: GuestEntity) {
@@ -258,5 +271,25 @@ class SignInViewModel(private val database: ManifestoDatabaseDao,
         checkEmail()
         checkEmergencyName()
         checkEmergencyNumber()
+    }
+
+    fun showNameError(): Boolean {
+        return _name.value?.length ?: 0 > 0 && _name_check.value == false
+    }
+
+    fun showPhoneError(): Boolean {
+        return _phone_number.value?.length ?: 0 > 0 && _phone_number_check.value == false
+    }
+
+    fun showEmailError(): Boolean {
+        return _email.value?.length ?: 0 > 0 && _email_check.value == false
+    }
+
+    fun showEmergencyNameError(): Boolean {
+        return _emergency_name.value?.length ?: 0 > 0 && _emergency_name_check.value == false
+    }
+
+    fun showEmergencyPhoneError(): Boolean {
+        return _emergency_number.value?.length ?: 0 > 0 && _emergency_number_check.value == false
     }
 }

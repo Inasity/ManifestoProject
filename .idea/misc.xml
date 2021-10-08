@@ -7,12 +7,18 @@
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.1537037037037037" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.15648148148148147" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/drawable/ic_filler.xml" value="0.15648148148148147" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15092592592592594" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/font-v26/modernregular.xml" value="0.15092592592592594" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/font/modern_regular.xml" value="0.15092592592592594" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/font/modernregular.xml" value="0.15092592592592594" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/font/montserrat.xml" value="0.15092592592592594" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/activity_main.xml" value="0.2674772036474164" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/fragment_guest_delete_dialog.xml" value="0.33" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/fragment_main.xml" value="0.2674772036474164" />
-        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/fragment_main_screen.xml" value="0.25" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/fragment_main_screen.xml" value="0.33" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
         <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/list_item_guest_entity.xml" value="0.33" />
+        <entry key="..\:/BPS-Internship/BPS-Syntax-Lessons/Android-Lessons/ManifestoProject/app/src/main/res/layout/manifest_splash_screen.xml" value="0.25" />
       </map>
     </option>
   </component>
