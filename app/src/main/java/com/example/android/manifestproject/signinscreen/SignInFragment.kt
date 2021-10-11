@@ -1,5 +1,7 @@
 package com.example.android.manifestproject.signinscreen
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,51 +59,53 @@ class SignInFragment : Fragment() {
         viewModel.name_check.observe(viewLifecycleOwner, Observer { goodName ->
             if(viewModel.showNameError())
             {
-                binding.textFieldTIET.setError(
-                    "Must be 2-12 character's long and have no special characters.", null)
+                binding.textFieldTIL.isErrorEnabled = true
+                binding.textFieldTIL.error =
+                    "Must be 2-12 character's long and have no special characters."
             }
             else{
-                binding.textFieldTIL.error = null
+                binding.textFieldTIL.isErrorEnabled = false
             }
         })
 
         viewModel.phone_number_check.observe(viewLifecycleOwner, Observer { goodPhone ->
             if(viewModel.showPhoneError()){
-                binding.textFieldPhoneInput.setError(
-                    "Must enter 10 digit number.", null)
+                binding.textFieldPhone.isErrorEnabled = true
+                binding.textFieldPhone.error = "Must enter 10 digit number."
             }
             else{
-                binding.textFieldPhone.error = null
+                binding.textFieldPhone.isErrorEnabled = false
             }
         })
 
         viewModel.email_check.observe(viewLifecycleOwner, Observer { goodEmail ->
             if(viewModel.showEmailError()){
-                binding.textFieldEmailInput.setError(
-                    "We do not recognize that as an email. Try again.",
-                    null)
+                binding.textFieldEmail.isErrorEnabled = true
+                binding.textFieldEmail.error = "We do not recognize that as an email. Try again."
             }
             else{
-                binding.textFieldEmail.error = null
+                binding.textFieldEmail.isErrorEnabled = false
             }
         })
 
         viewModel.emergency_number_check.observe(viewLifecycleOwner, Observer { goodEmergencyNum ->
             if(viewModel.showEmergencyPhoneError()){
-                binding.textFieldEmergencyNumberInput.setError("Must enter 10 digit number.", null)
+                binding.textFieldEmergencyNumber.isErrorEnabled = true
+                binding.textFieldEmergencyNumber.error = "Must enter 10 digit number."
             }
             else{
-                binding.textFieldEmergencyNumber.error = null
+                binding.textFieldEmergencyNumber.isErrorEnabled = false
             }
         })
 
         viewModel.emergency_name_check.observe(viewLifecycleOwner, Observer { goodEmergencyName ->
             if(viewModel.showEmergencyNameError()){
-                binding.textFieldEmergencyNameInput.setError("Must be 2-12 character's long and have no special characters.",
-                null)
+                binding.textFieldEmergencyName.isErrorEnabled = true
+                binding.textFieldEmergencyName.error =
+                    "Must be 2-12 character's long and have no special characters."
             }
             else{
-                binding.textFieldEmergencyName.error = null
+                binding.textFieldEmergencyName.isErrorEnabled = false
             }
         })
 

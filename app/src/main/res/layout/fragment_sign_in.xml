@@ -73,7 +73,8 @@
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ScrollView
             android:id="@+id/signInScrollView"
@@ -97,25 +98,23 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldTIL"
                     android:layout_width="240dp"
-                    android:layout_height="60dp"
-
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Full Name"
+                    android:textColorHint="#1f1f39"
                     app:boxBackgroundColor="#1f1f39"
                     app:boxBackgroundMode="outline"
                     app:boxCollapsedPaddingTop="0dp"
                     app:boxStrokeColor="#eea86c"
-                    app:boxStrokeErrorColor="#c01313"
+                    app:boxStrokeErrorColor=" #c01313"
                     app:boxStrokeWidth="2dp"
                     app:counterMaxLength="12"
-                    app:counterOverflowTextColor="@color/design_default_color_error"
                     app:errorEnabled="true"
-                    app:errorTextAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:errorTextColor="#c01313"
-                    app:helperTextTextColor="#1f1f39"
-                    app:hintTextColor="#1f1f39"
-
+                    app:errorIconDrawable="@null"
+                    app:errorIconTintMode="src_over"
+                    app:errorTextColor=" #c01313"
+                    app:hintTextColor="#eea86c"
                     app:placeholderTextColor="#1f1f39">
 
 
@@ -127,6 +126,8 @@
                         android:fontFamily="@font/montserrat"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.updateName(text)}"
                         android:text="@{viewModel.name}"
+                        android:inputType="phone"
+                        android:textColor="#1f1f39"
                         android:textColorHint="#1f1f39"
                         android:textSize="11sp" />
 
@@ -135,15 +136,22 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldPhone"
                     android:layout_width="240dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Phone Number"
+                    android:textColorHint="#1f1f39"
                     app:boxBackgroundMode="outline"
                     app:boxCollapsedPaddingTop="0dp"
                     app:boxStrokeColor="#eea86c"
+                    app:boxStrokeErrorColor=" #c01313"
                     app:boxStrokeWidth="2dp"
-                    app:errorEnabled="true">
+                    app:counterMaxLength="10"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:errorTextColor=" #c01313"
+                    app:hintTextColor="#eea86c"
+                    app:placeholderTextColor="#1f1f39">
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -154,6 +162,7 @@
                         android:fontFamily="@font/montserrat"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.updatePhoneNumber(text)}"
                         android:text="@{viewModel.phone_number}"
+                        android:textColor="#1f1f39"
                         android:textSize="11sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -161,15 +170,21 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldEmail"
                     android:layout_width="240dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Email"
+                    android:textColorHint="#1f1f39"
                     app:boxBackgroundMode="outline"
                     app:boxCollapsedPaddingTop="0dp"
                     app:boxStrokeColor="#eea86c"
+                    app:boxStrokeErrorColor=" #c01313"
                     app:boxStrokeWidth="2dp"
                     app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:errorTextColor=" #c01313"
+                    app:hintTextColor="#eea86c"
+                    app:placeholderTextColor="#1f1f39"
                     tools:layout_editor_absoluteX="-113dp"
                     tools:layout_editor_absoluteY="588dp">
 
@@ -182,6 +197,7 @@
                         android:fontFamily="@font/montserrat"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmail(text)}"
                         android:text="@{viewModel.email}"
+                        android:textColor="#1f1f39"
                         android:textSize="11sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -189,15 +205,22 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldEmergencyNumber"
                     android:layout_width="240dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Emergency Contact Number"
+                    android:textColorHint="#1f1f39"
                     app:boxBackgroundMode="outline"
                     app:boxCollapsedPaddingTop="0dp"
                     app:boxStrokeColor="#eea86c"
+                    app:boxStrokeErrorColor=" #c01313"
                     app:boxStrokeWidth="2dp"
-                    app:errorEnabled="true">
+                    app:counterMaxLength="10"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:errorTextColor=" #c01313"
+                    app:hintTextColor="#eea86c"
+                    app:placeholderTextColor="#1f1f39">
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -208,6 +231,7 @@
                         android:fontFamily="@font/montserrat"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyNumber(text)}"
                         android:text="@{viewModel.emergency_number}"
+                        android:textColor="#1f1f39"
                         android:textSize="11sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -215,15 +239,22 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldEmergencyName"
                     android:layout_width="240dp"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:hint="Emergency Contact Name"
+                    android:textColorHint="#1f1f39"
                     app:boxBackgroundMode="outline"
                     app:boxCollapsedPaddingTop="0dp"
                     app:boxStrokeColor="#eea86c"
+                    app:boxStrokeErrorColor=" #c01313"
                     app:boxStrokeWidth="2dp"
-                    app:errorEnabled="true">
+                    app:counterMaxLength="12"
+                    app:errorEnabled="true"
+                    app:errorIconDrawable="@null"
+                    app:errorTextColor=" #c01313"
+                    app:hintTextColor="#eea86c"
+                    app:placeholderTextColor="#1f1f39">
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -234,6 +265,7 @@
                         android:fontFamily="@font/montserrat"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.updateEmergencyName(text)}"
                         android:text="@{viewModel.emergency_name}"
+                        android:textColor="#1f1f39"
                         android:textSize="11sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
