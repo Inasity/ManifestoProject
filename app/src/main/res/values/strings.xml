@@ -10,5 +10,15 @@
     <string name="guest_emergency_name"><![CDATA[<b>Emergency contact name:</b>]]></string>
     <string name="guest_emergency_phone"><![CDATA[<b>Emergency contact phone number:</b>]]></string>
     <string name="sign_in">Sign In</string>
+    <string name="ManifestoM">M</string>
+    <string name="ManifestoTitle">Manifesto</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="emergency_contact_number">Emergency Contact Number</string>
+    <string name="emergency_contact_name">Emergency Contact Name</string>
+    <string name="save_and_sign">Save and Sign</string>
+    <string name="manifesto">Manifesto</string>
+    <string name="guestName">Guest Name</string>
 
 </resources>

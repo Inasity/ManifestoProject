@@ -1,8 +1,6 @@
 package com.example.android.manifestproject.data
 
-import android.database.Cursor
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 

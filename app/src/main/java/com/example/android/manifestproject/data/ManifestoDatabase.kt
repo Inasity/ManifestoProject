@@ -1,7 +1,6 @@
 package com.example.android.manifestproject.data
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase

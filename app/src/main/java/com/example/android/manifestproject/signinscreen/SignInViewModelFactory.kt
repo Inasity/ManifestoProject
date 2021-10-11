@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.manifestproject.data.ManifestoDatabaseDao
-import java.lang.IllegalArgumentException
-import javax.sql.CommonDataSource
 
 class SignInViewModelFactory (
     private val dataSource: ManifestoDatabaseDao,
